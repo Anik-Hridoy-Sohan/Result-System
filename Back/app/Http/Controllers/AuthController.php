@@ -30,6 +30,7 @@ class AuthController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
+            'mobile' => '1234567890'
         ]);
         $mailData = [
             "name" => $request["name"],

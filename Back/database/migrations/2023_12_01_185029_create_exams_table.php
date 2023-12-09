@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
+            $table->string('program');
             $table->unsignedBigInteger('invigilator_id');
             $table->unsignedBigInteger('semester_id');
             $table->unsignedBigInteger('course_id');
             $table->string('type');
-            $table->int('total_mark');
-            $table->int('achived_mark');
+            $table->integer('total_mark');
+            $table->integer('achived_mark');
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');

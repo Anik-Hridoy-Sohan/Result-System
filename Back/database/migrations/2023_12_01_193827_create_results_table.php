@@ -15,14 +15,18 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('invigilator_id');
+            $table->string('program');
             $table->unsignedBigInteger('course_id');
-            $table->int('total_mark');
-            $table->int('achieved_mark');
+            $table->unsignedBigInteger('semester_id');
+            $table->integer('total_mark');
+            $table->integer('achieved_mark');
             $table->unsignedDecimal('achieved_grade', $precision = 8, $scale = 2);
             $table->timestamps();
-            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->foreign('invigilator_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
         });
     }
 
