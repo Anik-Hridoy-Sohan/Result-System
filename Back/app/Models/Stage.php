@@ -6,13 +6,13 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Role extends Model
+class Stage extends Model
 {
     use HasFactory;
-    protected $fillable = ['slug'];
+    protected $fillable = ['slug', 'name'];
 
     /**
-     * many-to-one relationship
+     *  many-to-one relationship
      */
     public function users()
     {

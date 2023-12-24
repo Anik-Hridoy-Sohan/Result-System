@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Role;
+use App\Models\Stage;
+use App\Models\Program;
+use App\Models\Department;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -43,4 +47,47 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // relationships
+    /**
+     * one-to-many relationship
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role->slug == $role;
+    }
+
+    /**
+     * one-to-many relationship
+     */
+    public function stage()
+    {
+        return $this->belongsTo(Stage::class);
+    }
+
+    public function hasStage($stage)
+    {
+        return $this->stage->slug == $stage;
+    }
+
+    /**
+     * one-to-many relationship
+     */
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+
+    /**
+     * one-to-many relationship
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('course_code');
             $table->unsignedBigInteger('semester_id');
-            $table->unsignedBigInteger('dept_id');
+            $table->unsignedBigInteger('course_teacher_id');
             $table->string('name');
-            $table->unsignedDecimal('cradit', $precision = 8, $scale = 2);
+            $table->float('cradit');
             $table->timestamps();
 
-            $table->foreign('dept_id')->references('id')->on('departments')->onDelete('cascade');
             $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
+            $table->foreign('course_teacher_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
