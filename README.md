@@ -1,6 +1,16 @@
 # Result-System
+
+## todo for frontend:
+
+- [] Creating new semester form
+- [] Creating new course form
+- [] Creating new exam form
+- [] Creating table for semester, course and exam edit and view and delete
+
 ## Note
-Api sanctam csrf token getting method - 
+
+Api sanctam csrf token getting method -
+
 ```js
 import { useState } from "react";
 import "./App.css";

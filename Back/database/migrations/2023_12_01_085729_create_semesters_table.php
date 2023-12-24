@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('dept_id');
-            $table->string('slug')->unique();
+            $table->unsignedBigInteger('stage_id'); // 1.1, 1.2, 2.1, 2.2, 3.1, 3.2, 4.1, 4.2, 5.1, 5.2, 6.1, 6.2....
+            $table->string('year');
+            $table->unsignedBigInteger('program_id');
             $table->timestamps();
+
+            $table->unique(['dept_id', 'stage_id', 'year', 'program_id']);
             $table->foreign('dept_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
+            $table->foreign('stage_id')->references('id')->on('stages')->onDelete('cascade');
         });
     }
 
