@@ -3,7 +3,7 @@ import Login from "./Components/Login";
 import { NavBar } from "./Components/NavBar";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Register from "./Components/Register";
-import { useGetUserQuery, useInitCsrfQuery } from "./Store";
+import { useGetUserQuery, useInitCsrfQuery, useTestQuery } from "./Store";
 import { useEffect, useState } from "react";
 import HomePage from "./Components/HomePage";
 import UserContext from "./Context/UserContext";
@@ -11,6 +11,7 @@ import LoadingContext from "./Context/LoadingContext";
 import LoadingBar from "react-top-loading-bar";
 
 const App = () => {
+  useTestQuery();
   const navigate = useNavigate();
   useInitCsrfQuery();
   const { data, isSuccess, isLoading } = useGetUserQuery();

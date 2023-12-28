@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('cradit');
             $table->timestamps();
 
+            $table->unique(['semester_id', 'course_code']);
             $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
             $table->foreign('course_teacher_id')->references('id')->on('users')->onDelete('cascade');
         });

@@ -31,8 +31,10 @@ return new class extends Migration
             $table->string('teacher_id')->nullable();
             $table->string('staff_id')->nullable();
             $table->unsignedBigInteger('role_id')->default(1);
-            $table->unsignedBigInteger('dept_id')->default(1);
+            $table->unsignedBigInteger('dept_id')->nullable();
             $table->unsignedBigInteger('previous_id')->nullable();
+
+            $table->unique(['student_id', 'program_id']);
 
             $table->foreign('dept_id')->references('id')->on('departments')->onDelete('cascade');
             $table->foreign('previous_id')->references('id')->on('users')->onDelete('cascade');

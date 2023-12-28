@@ -1,8 +1,13 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
+use App\Http\Middleware\Cors;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +24,40 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * User authentication
+ * User search and verification
+ */
 Route::post('/login', [AuthController::class, 'login']);
 Route::post("/register", [AuthController::class, 'signup']);
+Route::post("/edit-user/{id}", [UserController::class, 'edit']);
+Route::get('/student/{key}', [UserController::class, 'searchStudent']);
+Route::get('/teacher/{key}', [UserController::class, 'searchTeacher']);
+Route::get('/verify-user/{id}/{token}', [AuthController::class, 'verifyEmail']);
+Route::get('/resend-verify-email/{id}', [AuthController::class, 'resendEmail']);
+Route::get('/approve-user/{id}', [UserController::class, 'approveUser']);
+
+
+/**
+ * course related routes
+ */
+Route::post('/create-new-course', [CourseController::class, 'store']);
+Route::post('/edit-course/{id}', [CourseController::class, 'edit']);
+Route::get('/delete-course/{id}', [CourseController::class, 'delete']);
+Route::get('/semester/{semesterId}/courses', [CourseController::class, 'getCourses']);
+
+
+/**
+ * program related routes
+ */
+Route::post('/create-new-program', [ProgramController::class, 'store']);
+Route::post('/edit-program/{id}', [ProgramController::class, 'edit']);
+Route::get('/delete-program/{id}', [ProgramController::class, 'delete']);
+
+/**
+ * department related routes
+ */
+Route::post('/create-new-department', [DepartmentController::class, 'store']);
+Route::post('/edit-department/{id}', [DepartmentController::class, 'edit']);
+Route::get('/delete-department/{id}', [DepartmentController::class, 'delete']);
+Route::get('/get-all-departments', [DepartmentController::class, 'getDepartments']);

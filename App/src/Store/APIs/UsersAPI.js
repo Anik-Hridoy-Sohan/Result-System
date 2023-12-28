@@ -46,6 +46,11 @@ const UsersAPI = createApi({
           };
         },
       }),
+      test: builder.query({
+        query: () => {
+          return "api/test";
+        },
+      }),
       getUser: builder.query({
         providesTags: (result, error, arg) => {
           const tags = [{ type: "user" }];
@@ -114,5 +119,6 @@ export const {
   useGetUserQuery,
   useLoginMutation,
   useSignupMutation,
+  useTestQuery,
 } = UsersAPI;
 export { UsersAPI };
