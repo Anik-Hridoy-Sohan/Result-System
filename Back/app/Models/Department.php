@@ -23,4 +23,9 @@ class Department extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function chairman()
+    {
+        return $this->belongsTo(User::class, 'chairman_id');
+    }
 }

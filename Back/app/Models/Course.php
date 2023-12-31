@@ -19,4 +19,11 @@ class Course extends Model
     {
         return $this->belongsTo(User::class, 'course_teacher_id');
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_student')
+            ->withPivot('is_paid', 'course_type_id')
+            ->withTimestamps();
+    }
 }
