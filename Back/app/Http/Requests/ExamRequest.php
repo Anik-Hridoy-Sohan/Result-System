@@ -29,9 +29,9 @@ class ExamRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'student_id' => 'required|numeric',
-            'invigilator_id' => 'required|numeric',
-            'course_id' => 'required|numeric',
+            'student_id' => 'required|exists:users,id',
+            'invigilator_id' => 'required|exists:users,id',
+            'course_id' => 'required|exists:courses,id',
             'type' => 'required|string|max: 255',
             'total_mark' => 'required|decimal:2',
             'achived_mark' => 'required|decimal:2'

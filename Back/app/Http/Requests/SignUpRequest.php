@@ -47,8 +47,8 @@ class SignUpRequest extends FormRequest
             $rules['session'] = 'missing';
             $rules['teacher_id'] = 'prohibits:staff_id|numeric|unique:users';
             $rules['staff_id'] = 'prohibits:teacher_id|numeric|unique:users';
-            $rules['dept_id'] = 'nullable|numeric';
-            $rules['previous_id'] = 'nullable|numeric|unique:users';
+            $rules['dept_id'] = 'nullable|exists:departments,id';
+            $rules['previous_id'] = 'nullable|exists:users,id';
         } else if ($this->input('role') == 'teacher') {
             $rules['student_id'] = 'missing';
             $rules['program_id'] = 'missing';
@@ -57,7 +57,7 @@ class SignUpRequest extends FormRequest
             $rules['teacher_id'] = 'required|numeric|unique:users';
             $rules['staff_id'] = 'missing';
             $rules['dept_id'] = 'required|numeric';
-            $rules['previous_id'] = 'nullable|numeric|unique:users';
+            $rules['previous_id'] = 'nullable|exists:users,id';
         } else if ($this->input('role') == 'staff') {
             $rules['student_id'] = 'missing';
             $rules['program_id'] = 'missing';
@@ -65,17 +65,17 @@ class SignUpRequest extends FormRequest
             $rules['session'] = 'missing';
             $rules['teacher_id'] = 'missing';
             $rules['staff_id'] = 'required|numeric|unique:users';
-            $rules['dept_id'] = 'nullable|numeric';
-            $rules['previous_id'] = 'nullable|numeric|unique:users';
+            $rules['dept_id'] = 'nullable|exists:departments,id';
+            $rules['previous_id'] = 'nullable|exists:users,id';
         } else if ($this->input('role') == 'student') {
             $rules['student_id'] = 'required|numeric';
             $rules['program_id'] = 'required|numeric';
-            $rules['stage_id'] = 'required|numeric';
+            $rules['stage_id'] = 'required|exists:stages,id';
             $rules['session'] = 'required|string|max:7';
             $rules['teacher_id'] = 'missing';
             $rules['staff_id'] = 'missing';
-            $rules['dept_id'] = 'numeric';
-            $rules['previous_id'] = 'nullable|numeric|unique:users';
+            $rules['dept_id'] = 'required|exists:departments,id';
+            $rules['previous_id'] = 'nullable|exists:users,id';
 
             $rules['student_id_program_id_unique'] = Rule::unique('users')->where(function ($query) {
                 return $query->where('program_id', $this->input('program_id'))

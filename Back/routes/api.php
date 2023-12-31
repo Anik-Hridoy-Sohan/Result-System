@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\SemesterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,14 @@ Route::post('/create-new-department', [DepartmentController::class, 'store']);
 Route::post('/edit-department/{id}', [DepartmentController::class, 'edit']);
 Route::get('/delete-department/{id}', [DepartmentController::class, 'delete']);
 Route::get('/get-all-departments', [DepartmentController::class, 'getDepartments']);
+
+/**
+ * semester related routes
+ */
+Route::post('/create-new-semester', [SemesterController::class, 'store']);
+Route::post('/edit-semester', [SemesterController::class, 'edit']);
+Route::get('/delete-semester/{id}', [SemesterController::class, 'delete']);
+Route::get('/get-all-semesters/{dept_id}/{program_id}', [SemesterController::class, 'getSemesters']);
 
 /**
  * exam related routes

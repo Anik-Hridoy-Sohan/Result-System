@@ -32,8 +32,8 @@ class CourseRequest extends FormRequest
     {
         $rules = [
             'course_code' => 'required|string|max:63',
-            'semester_id' => 'required|digits',
-            'course_teacher_id' => 'required|digits',
+            'semester_id' => 'required|exists:semesters,id',
+            'course_teacher_id' => 'required|exists:users,id',
             'name' => 'required|string|max:255',
             'cradit' => 'required|decimal:2'
         ];
