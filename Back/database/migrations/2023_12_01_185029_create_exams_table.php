@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('achived_mark');
             $table->timestamps();
 
+            $table->unique(['student_id', 'course_id']);
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('invigilator_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

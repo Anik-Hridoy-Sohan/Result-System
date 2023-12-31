@@ -90,4 +90,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class);
     }
+
+    /**
+     * many-to-many relationship
+     */
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_student')
+            ->withPivot('is_paid', 'course_type_id')
+            ->withTimestamps();
+    }
 }
