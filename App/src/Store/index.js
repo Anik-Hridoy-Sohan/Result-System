@@ -20,7 +20,6 @@ export {
   useGetUserQuery,
   useLoginMutation,
   useSignupMutation,
-  useTestQuery,
 } from "./APIs/UsersAPI";
 
 export {
