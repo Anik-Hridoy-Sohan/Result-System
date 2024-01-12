@@ -29,7 +29,7 @@ class SignUpRequest extends FormRequest
             'email' => 'required|string|email|unique:users|max:255',
             'password' => 'required|string|min:8|confirmed',
             'address' => 'required|string|max:511',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'avatar' => 'nullable',
             'doc_file' => 'nullable|extensions:zip,7z,rar',
             'mobile' => 'required|string|max:15',
             'father_name' => 'required|string|max:255',

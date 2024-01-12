@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->string('name');
-            $table->integer('max_semester');
             $table->timestamps();
         });
     }

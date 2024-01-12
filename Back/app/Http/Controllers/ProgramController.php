@@ -15,7 +15,6 @@ class ProgramController extends Controller
             [
                 'name' => $request['name'],
                 'slug' => $request['slug'],
-                'max_semester' => $request['max_semester'],
             ]
         );
         return response()->json(['message' => 'Successfully created'], 204);
@@ -26,7 +25,6 @@ class ProgramController extends Controller
         $program = Program::findOrFail($id);
         $program->name = $request['name'];
         $program->slug = $request['slug'];
-        $program->max_semester = $request['max_semester'];
         $program->save();
         return response()->json(['message' => 'Successfully edited'], 200);
     }

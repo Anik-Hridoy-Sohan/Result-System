@@ -35,7 +35,7 @@ const UsersAPI = createApi({
       initCsrf: builder.query({
         query() {
           return {
-            url: "sanctum/csrf-cookie",
+            url: "/sanctum/csrf-cookie",
             credentials: "include",
             headers: {
               "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
@@ -53,7 +53,7 @@ const UsersAPI = createApi({
         },
         query: () => {
           return {
-            url: "api/user",
+            url: "/api/user",
             credentials: "include",
             headers: {
               "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
@@ -68,7 +68,7 @@ const UsersAPI = createApi({
         query: ({ email, password }) => {
           console.log("login query called");
           return {
-            url: "api/login",
+            url: "/api/login",
             body: { email, password },
             method: "POST",
             credentials: "include",
@@ -86,16 +86,111 @@ const UsersAPI = createApi({
         invalidatesTags: (result, error, arg) => {
           return [{ type: "user" }];
         },
-        query: ({ email, password, confirmPassword, name }) => {
+        query: ({ formData }) => {
           return {
-            url: "api/register",
-            body: {
-              name,
-              email,
-              password,
-              password_confirmation: confirmPassword,
-            },
+            url: "/api/register",
+            body: { ...formData },
             method: "POST",
+            headers: {
+              "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          };
+        },
+      }),
+      createProgram: builder.mutation({
+        invalidatesTags: (result, error, arg) => {
+          return [{ type: "program" }];
+        },
+        query: ({ formData }) => {
+          return {
+            url: "/api/create-new-program",
+            body: { ...formData },
+            method: "POST",
+            headers: {
+              "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          };
+        },
+      }),
+      createDepartment: builder.mutation({
+        invalidatesTags: (result, error, arg) => {
+          return [{ type: "program" }];
+        },
+        query: ({ formData }) => {
+          return {
+            url: "/api/create-new-department",
+            body: { ...formData },
+            method: "POST",
+            headers: {
+              "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          };
+        },
+      }),
+      getDepartments: builder.query({
+        providesTags: (result, error, arg) => {
+          const tags = [{ type: "program" }];
+          return tags;
+        },
+        query: () => {
+          return {
+            url: "/api/get-all-departments",
+            credentials: "include",
+            headers: {
+              "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          };
+        },
+      }),
+      getProgramsWithDepartments: builder.query({
+        providesTags: (result, error, arg) => {
+          const tags = [{ type: "program" }];
+          return tags;
+        },
+        query: () => {
+          return {
+            url: "/api/get-programs-with-departments",
+            credentials: "include",
+            headers: {
+              "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          };
+        },
+      }),
+      getStages: builder.query({
+        query: () => {
+          return {
+            url: "/api/get-all-stages",
+            credentials: "include",
+            headers: {
+              "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          };
+        },
+      }),
+      getAllUser: builder.query({
+        query: () => {
+          return {
+            url: "/api/get-all-users",
+            credentials: "include",
             headers: {
               "X-XSRF-TOKEN": decodeURIComponent(getCookie("XSRF-TOKEN")),
               "X-Requested-With": "XMLHttpRequest",
@@ -114,5 +209,11 @@ export const {
   useGetUserQuery,
   useLoginMutation,
   useSignupMutation,
+  useGetDepartmentsQuery,
+  useGetAllUserQuery,
+  useGetProgramsWithDepartmentsQuery,
+  useGetStagesQuery,
+  useCreateProgramMutation,
+  useCreateDepartmentMutation,
 } = UsersAPI;
 export { UsersAPI };

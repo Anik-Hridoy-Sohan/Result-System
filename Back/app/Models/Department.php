@@ -28,4 +28,11 @@ class Department extends Model
     {
         return $this->belongsTo(User::class, 'chairman_id');
     }
+
+    public function programs()
+    {
+        return $this->belongsToMany(Program::class, 'departments_programs')
+            ->withPivot('semester_number')
+            ->withTimestamps();
+    }
 }

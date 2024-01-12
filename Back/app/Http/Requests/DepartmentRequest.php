@@ -32,7 +32,9 @@ class DepartmentRequest extends FormRequest
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:15',
             'department_code' => 'required|string|max:7',
-            'chairman_id' => 'required|exists:users,id'
+            'chairman_id' => 'required|exists:users,id',
+            'program_id' => 'required|exists:users,id',
+            'semester_number' => 'required|numeric'
         ];
     }
 

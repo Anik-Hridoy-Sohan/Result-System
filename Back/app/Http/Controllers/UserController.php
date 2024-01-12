@@ -145,4 +145,25 @@ class UserController extends Controller
             return response()->json(['message' => 'Unauthorized action'], 400);
         }
     }
+
+    public function getAllUser()
+    {
+        $users = User::where('status', '<>', -1)->get();
+        $responsUsers = array();
+        foreach ($users as $user) {
+            $department = 'Not Specified';
+            if (Role::findOrFail($user->role_id)->slug != 'staff' && Role::findOrFail($user->role_id)->slug != 'master') {
+                $department = Department::findOrFail($user->dept_id)->slug;
+            }
+            $tempUser =  array(
+                'id' => $user->id,
+                'name' => $user->name,
+                'avatar' => $user->avatar,
+                'department' => $department,
+                'role' => Role::findOrFail($user->role_id)->name,
+            );
+            array_push($responsUsers, $tempUser);
+        }
+        return response()->json(['data' => $responsUsers], 200);
+    }
 }
