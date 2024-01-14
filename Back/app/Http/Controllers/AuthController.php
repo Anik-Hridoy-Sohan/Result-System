@@ -28,6 +28,7 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request): JsonResponse
     {
+        return response()->json(['request' => $request], 200);
         $role = 0;
         if ($request->input('role') == 'master') {
             $role = 1;

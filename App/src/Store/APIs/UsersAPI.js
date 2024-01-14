@@ -87,6 +87,7 @@ const UsersAPI = createApi({
           return [{ type: "user" }];
         },
         query: ({ formData }) => {
+          console.log(formData);
           return {
             url: "/api/register",
             body: { ...formData },
