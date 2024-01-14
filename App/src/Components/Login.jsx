@@ -1,10 +1,49 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLoginMutation } from "../Store/APIs/UsersAPI";
+import LoadingContext from "../Context/LoadingContext";
+import Toaster from "./Toaster";
 const Login = () => {
   const [email, setEmail] = useState("anik@anik.com");
   const [password, setPassword] = useState("1234567890");
   const [login, result] = useLoginMutation();
+  const { setProgress } = useContext(LoadingContext);
+  const [showToast, setShowToast] = useState(false);
+  const [toastComponent, setToastComponent] = useState({
+    message: "",
+    type: "alert alert-info",
+  });
+
+  const handleShowToast = () => {
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
+
+  useEffect(() => {
+    if (result.isLoading) {
+      setProgress(30);
+    } else {
+      setProgress(100);
+    }
+    if (result.isSuccess || result.isError) {
+      setProgress(100);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result.isLoading, result.isSuccess]);
+
+  useEffect(() => {
+    if (result?.error?.data?.message) {
+      setToastComponent({
+        message: result?.error?.data?.message,
+        type: "alert alert-error",
+      });
+      handleShowToast();
+    }
+  }, [result?.error?.data?.message]);
+
+  let renderToast = (
+    <Toaster message={toastComponent.message} type={toastComponent.type} />
+  );
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -13,6 +52,7 @@ const Login = () => {
 
   return (
     <div className="hero min-h-screen bg-base-200">
+      {showToast ? renderToast : null}
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login</h1>
@@ -22,12 +62,12 @@ const Login = () => {
           <form className="card-body">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">email</span>
+                <span className="label-text">Email</span>
               </label>
               <input
-                type="name"
+                type="email"
                 placeholder="email"
-                className="input input-bordered"
+                className="input input-bordered input-info"
                 required
                 onChange={(e) => {
                   e.preventDefault();
@@ -43,7 +83,7 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="password"
-                className="input input-bordered"
+                className="input input-bordered input-info "
                 required
                 onChange={(e) => {
                   e.preventDefault();
@@ -64,7 +104,10 @@ const Login = () => {
               </span>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary" onClick={handleLogin}>
+              <button
+                className="btn btn-outline btn-info"
+                onClick={handleLogin}
+              >
                 Login
               </button>
             </div>

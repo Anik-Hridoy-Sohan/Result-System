@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Program;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Jobs\SendUserVarifyMail;
@@ -18,7 +19,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->email_verified_at !== null)    return response()->json(['message' => 'Login successful', 'user' => Auth::user()], 200);
+            if (Auth::user()->email_verified_at && Auth::user()->status != -1)    return response()->json(['message' => 'Login successful', 'user' => Auth::user()], 200);
             else return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
@@ -27,6 +28,7 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request): JsonResponse
     {
+        return response()->json(['request' => $request], 200);
         $role = 0;
         if ($request->input('role') == 'master') {
             $role = 1;
@@ -36,6 +38,10 @@ class AuthController extends Controller
             $role = 3;
         } else if ($request->input('role') == 'student') {
             $role = 4;
+            $belongsToProgram = Program::find($request['program_id'])->departments->contains('id', $request['dept_id']);
+            if (!$belongsToProgram) {
+                return response()->json(['message' => 'Program and department does not match'], 400);
+            }
         } else {
             return response()->json(['message' => 'Invalid role'], 400);
         }

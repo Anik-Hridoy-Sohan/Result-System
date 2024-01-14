@@ -1,17 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { UsersAPI } from "./APIs/UsersAPI";
-import { PostsAPI } from "./APIs/PostsAPI";
 
 export const Store = configureStore({
   reducer: {
     [UsersAPI.reducerPath]: UsersAPI.reducer,
-    [PostsAPI.reducerPath]: PostsAPI.reducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware()
-      .concat(UsersAPI.middleware)
-      .concat(PostsAPI.middleware);
+    return getDefaultMiddleware().concat(UsersAPI.middleware);
   },
 });
 setupListeners(Store.dispatch);
@@ -20,15 +16,10 @@ export {
   useGetUserQuery,
   useLoginMutation,
   useSignupMutation,
+  useGetDepartmentsQuery,
+  useGetAllUserQuery,
+  useGetProgramsWithDepartmentsQuery,
+  useGetStagesQuery,
+  useCreateProgramMutation,
+  useCreateDepartmentMutation,
 } from "./APIs/UsersAPI";
-
-export {
-  useGetPostsQuery,
-  useAddPostMutation,
-  useVotePostMutation,
-  useAddCommentMutation,
-  useGetThePostQuery,
-  useGetPendingPostsQuery,
-  useDeletePendingPostMutation,
-  useApprovePostMutation,
-} from "./APIs/PostsAPI";

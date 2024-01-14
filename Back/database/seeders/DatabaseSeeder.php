@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // works only
         // $this->createRoles();
-        // $this->createStages();
+        $this->createStages();
         // $this->createPrograms();
         // $this->createDepartments();
         // $this->createSemesters();
@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\User::create();
 
-        \App\Models\User::factory(1)->create();
+        // \App\Models\User::factory(1)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Anik Saha',

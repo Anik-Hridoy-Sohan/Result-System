@@ -18,4 +18,11 @@ class Program extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class, 'departments_programs')
+            ->withPivot('semester_number')
+            ->withTimestamps();
+    }
 }
