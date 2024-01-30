@@ -28,15 +28,16 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request): JsonResponse
     {
-        return response()->json(['request' => $request], 200);
+        $request = $request->validated();
+
         $role = 0;
-        if ($request->input('role') == 'master') {
+        if ($request['role'] == 'master') {
             $role = 1;
-        } else if ($request->input('role') == 'teacher') {
+        } else if ($request['role'] == 'teacher') {
             $role = 2;
-        } else if ($request->input('role') == 'staff') {
+        } else if ($request['role'] == 'staff') {
             $role = 3;
-        } else if ($request->input('role') == 'student') {
+        } else if ($request['role'] == 'student') {
             $role = 4;
             $belongsToProgram = Program::find($request['program_id'])->departments->contains('id', $request['dept_id']);
             if (!$belongsToProgram) {
@@ -63,16 +64,16 @@ class AuthController extends Controller
             'nationality' => $request['nationality'],
             'dob' => $request['dob'],
             'emergency_mobile' => $request['emergency_mobile'],
-            'dept_id' => $request['dept_id'],
+            'dept_id' => $request['dept_id'] ?? null,
             'status' => -1,
             'religion' => $request['religion'],
-            'teacher_id' => $request['teacher_id'],
-            'staff_id' => $request['staff_id'],
-            'student_id' => $request['student_id'],
-            'previous_id' => $request['previous_id'],
-            'program_id' => $request['program_id'],
-            'stage_id' => $request['stage_id'],
-            'session' => $request['session'],
+            'teacher_id' => $request['teacher_id'] ?? null,
+            'staff_id' => $request['staff_id'] ?? null,
+            'student_id' => $request['student_id'] ?? null,
+            'previous_id' => $request['previous_id'] ?? null,
+            'program_id' => $request['program_id'] ?? null,
+            'stage_id' => $request['stage_id'] ?? null,
+            'session' => $request['session'] ?? null,
             'remember_token' => $token,
         ]);
 

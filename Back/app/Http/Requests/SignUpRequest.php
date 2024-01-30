@@ -38,6 +38,7 @@ class SignUpRequest extends FormRequest
             'religion' => 'required|string|max:255',
             'dob' => 'required|date',
             'emergency_mobile' => 'required|string|max:15',
+            'role' => 'required|string',
         ];
 
         if ($this->input('role') == 'master') {

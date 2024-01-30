@@ -447,7 +447,7 @@ const StudentRegister = () => {
             <label className="label label-text">Session</label>
             <input
               name="session"
-              type="number"
+              type="string"
               placeholder="session"
               className="input input-bordered w-full max-w-md"
               required
